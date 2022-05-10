@@ -51,17 +51,50 @@ public class MyArrayQueue
    }
 
    /** insert theElement at the rear of the queue */
-   public void enqueue(Object theElement)	
+   public void enqueue(Object theElement)
    {
-	  // Add your code here
-	   
+	   try {
+         if (rear == queue.length - 1) {
+            if (0 != front) {
+               rear = 0;
+               queue[rear] = theElement;
+            } else {
+               throw new Exception("You cannot enqueue. Queue has the maximum number of elements.");
+            }
+         } else {
+            if (rear + 1 != front) {
+               rear += 1;
+               queue[rear] = theElement;
+            } else {
+               throw new Exception("You cannot enqueue. Queue has the maximum number of elements.");
+            }
+         }
+      } catch (Exception e) {
+         Helpers.printLine(e.getMessage());
+      }
    }
 
    /** remove an element from the front of the queue
      * @return removed element */
    public Object dequeue()
    {
-	   // Add your code here
+      Object frontElement = getFrontElement();
+
+      try {
+         if (isEmpty()) {
+            throw new Exception("You cannot dequeue. The queue is empty.");
+         }
+   
+         if (front == queue.length - 1) {
+            front = 0;
+         } else {
+            front += 1;
+         }
+      } catch (Exception e) {
+         Helpers.printLine(e.getMessage());
+      }
+
+      return frontElement;
    }
    
    /** test program */
@@ -89,9 +122,9 @@ public class MyArrayQueue
       // delete all elements
       while (!q.isEmpty())
       {
-      	  System.out.println("Rear element   : " + q.getRearElement());
-    	  System.out.println("Front element  : " + q.getFrontElement());
-    	  System.out.println("Removed element: " + q.dequeue() + "\n");
+         System.out.println("Rear element   : " + q.getRearElement());
+    	   System.out.println("Front element  : " + q.getFrontElement());
+    	   System.out.println("Removed element: " + q.dequeue() + "\n");
       }
 	  if (q.isEmpty()) System.out.println("empty queue");      
    }  

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Program {
     /**
@@ -48,6 +47,7 @@ public class Program {
      */
     public static ArrayList<String> merge(ArrayList<String> s1, ArrayList<String> s2){
         ArrayList<String> mergedList = new ArrayList<String>();
+        // Move elements from sublists to merged list depending on the alphabetical order
         while (s1.size() != 0 && s2.size() != 0){
             if (s1.get(0).compareTo(s2.get(0)) <= 0) {
                 mergedList.add(s1.get(0));
@@ -57,10 +57,12 @@ public class Program {
                 s2.remove(0);
             }
         }
+        // Move remaining elements in s1 to mergedList
         while (s1.size() != 0) {
             mergedList.add(s1.get(0));
             s1.remove(0);
         }
+        // Move remaining elements in s2 to mergedList
         while (s2.size() != 0) {
             mergedList.add(s2.get(0));
             s2.remove(0);
@@ -80,22 +82,35 @@ public class Program {
         // Merge Sort Algorithm : https://learningcentral.cf.ac.uk/ultra/courses/_406132_1/cl/outline
         ArrayList<String> mergedList = new ArrayList<String>();
         if (p < r) {
+            // Find the midpoint of the list
             int q = (int)Math.floor((p + r) / 2);
+            // Create merged two sublists that are in alphabetical order
             ArrayList<String> s1 = mergeSort(listofWords, p, q);
             ArrayList<String> s2 = mergeSort(listofWords, q + 1, r);
+            // Merge the two sublists just created
             mergedList = merge(s1, s2);
         } else {
+            // If the sublist contains one element, append it to the mergedList
             mergedList.add(listofWords.get(p));
         }
         return mergedList;
     }
 
     public static void main(String[] args){
+        // Read Files
         ArrayList<String> stopwords = Helpers.readFile("stopwords.txt", true);
         ArrayList<String> input = Helpers.readFile("input.txt", false);
+        // Remove Stopwords
         ArrayList<String> filteredInput = deleteStopwords(input, stopwords);
+        Helpers.printLine("\nInput with stopwords removed:");
         System.out.println(filteredInput);
-        ArrayList<String> sortedInput = mergeSort(filteredInput, 0, filteredInput.size() - 1);
-        System.out.println(sortedInput);
+        // Sort with Insersion Sort
+        ArrayList<String> insertionSortedInput = insertionSort(filteredInput);
+        Helpers.printLine("\nInput with stopwords removed insertion sorted:");
+        System.out.println(insertionSortedInput);
+        // Sort with Merge Sort
+        ArrayList<String> mergeSortedInput = mergeSort(filteredInput, 0, filteredInput.size() - 1);
+        Helpers.printLine("\nInput with stopwords removed merge sorted:");
+        System.out.println(mergeSortedInput);
     }
 }
