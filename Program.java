@@ -25,17 +25,30 @@ public class Program {
     public static ArrayList<String> insertionSort(ArrayList<String> listofWords) {
         // Insertion Sort Algorithm : https://learningcentral.cf.ac.uk/ultra/courses/_406132_1/cl/outline
         // Loop throught the listofWords, starting with the second element
+
+        int swaps = 0;
+        int checks = 0;
         for (int i = 1; i < listofWords.size(); i++){
+            // Algorithm Timing Code
+            if (i == 100 || i == 200 || i == 500) {
+                AlgorithmTimer.printTime("Insertion Sort first " + i + " sorted");
+            }
+
             String item = listofWords.get(i);
             int j = i -1;
+            checks += 1;
             // Compare the previous element to item till everything before it is in order.
             while (j >= 0 && listofWords.get(j).compareTo(item) > 0) {
+                swaps += 1;
+                checks += 1;
                 listofWords.set(j + 1, listofWords.get(j));
                 j -= 1;
             }
             listofWords.set(j + 1, item);
         }
 
+        Helpers.printLine("\nInsersion Sort Swaps : " + swaps);
+        Helpers.printLine("Insersion Sort Checks : " + checks);
         return listofWords;
     }
 
@@ -48,13 +61,19 @@ public class Program {
     public static ArrayList<String> merge(ArrayList<String> s1, ArrayList<String> s2){
         ArrayList<String> mergedList = new ArrayList<String>();
         // Move elements from sublists to merged list depending on the alphabetical order
+        int j = 0;
+        int i = 0;
+        int s1Length = s1.size();
         while (s1.size() != 0 && s2.size() != 0){
             if (s1.get(0).compareTo(s2.get(0)) <= 0) {
                 mergedList.add(s1.get(0));
                 s1.remove(0);
+                AlgorithmTimer.mergeInverstions += j;
+                i += 1;
             } else {
                 mergedList.add(s2.get(0));
                 s2.remove(0);
+                j += 1;
             }
         }
         // Move remaining elements in s1 to mergedList
@@ -67,6 +86,8 @@ public class Program {
             mergedList.add(s2.get(0));
             s2.remove(0);
         }
+
+        AlgorithmTimer.mergeInverstions += j * (s1Length - i);
 
         return mergedList;
     }
@@ -93,6 +114,18 @@ public class Program {
             // If the sublist contains one element, append it to the mergedList
             mergedList.add(listofWords.get(p));
         }
+
+        // Algorithm Timing Code
+        if (mergedList.size() >= 500 && !AlgorithmTimer.checks.get("500")) {
+            AlgorithmTimer.checks.put("500", true);
+            AlgorithmTimer.printTime("Merge Sort first 500 (really " + mergedList.size() + ") sorted");
+        } else if (mergedList.size() >= 200 && !AlgorithmTimer.checks.get("200")) {
+            AlgorithmTimer.checks.put("200", true);
+            AlgorithmTimer.printTime("Merge Sort first 200 (really " + mergedList.size() + ") sorted");
+        } else if (mergedList.size() >= 100 && !AlgorithmTimer.checks.get("100")) {
+            AlgorithmTimer.checks.put("100", true);
+            AlgorithmTimer.printTime("Merge Sort first 100 (really " + mergedList.size() + ") sorted");
+        }
         return mergedList;
     }
 
@@ -101,16 +134,27 @@ public class Program {
         ArrayList<String> stopwords = Helpers.readFile("stopwords.txt", true);
         ArrayList<String> input = Helpers.readFile("input.txt", false);
         // Remove Stopwords
+        Helpers.printLine("\nInput with stopwords removed:\n");
         ArrayList<String> filteredInput = deleteStopwords(input, stopwords);
-        Helpers.printLine("\nInput with stopwords removed:");
         System.out.println(filteredInput);
         // Sort with Insersion Sort
-        ArrayList<String> insertionSortedInput = insertionSort(filteredInput);
-        Helpers.printLine("\nInput with stopwords removed insertion sorted:");
+        AlgorithmTimer.resetStartTime();
+        Helpers.printLine("\nInput with stopwords removed insertion sorted:\n");
+        ArrayList<String> insertionSortedInput = insertionSort(new ArrayList<String>(filteredInput));
+        Helpers.printLine("");
         System.out.println(insertionSortedInput);
         // Sort with Merge Sort
-        ArrayList<String> mergeSortedInput = mergeSort(filteredInput, 0, filteredInput.size() - 1);
-        Helpers.printLine("\nInput with stopwords removed merge sorted:");
+        AlgorithmTimer.checks.put("100", false);
+        AlgorithmTimer.checks.put("200", false);
+        AlgorithmTimer.checks.put("500", false);
+        AlgorithmTimer.resetStartTime();
+        Helpers.printLine("\nInput with stopwords removed merge sorted:\n");
+        ArrayList<String> mergeSortedInput = mergeSort(new ArrayList<String>(filteredInput), 0, filteredInput.size() - 1);
+        Helpers.printLine("\nMerge Sort Inversions : " + AlgorithmTimer.mergeInverstions);
+        Helpers.printLine("");
         System.out.println(mergeSortedInput);
+        // Test MyArrayQueue
+        Helpers.printLine("\nTest MyArrayQueue:\n");
+        MyArrayQueue.main(null);
     }
 }

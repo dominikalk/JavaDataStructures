@@ -54,21 +54,13 @@ public class MyArrayQueue
    public void enqueue(Object theElement)
    {
 	   try {
-         if (rear == queue.length - 1) {
-            if (0 != front) {
-               rear = 0;
-               queue[rear] = theElement;
-            } else {
-               throw new Exception("You cannot enqueue. Queue has the maximum number of elements.");
-            }
-         } else {
-            if (rear + 1 != front) {
-               rear += 1;
-               queue[rear] = theElement;
-            } else {
-               throw new Exception("You cannot enqueue. Queue has the maximum number of elements.");
-            }
+         if ((rear + 1) % queue.length == front) {
+            throw new Exception("You cannot enqueue. Queue has the maximum number of elements.");
          }
+
+         rear = (rear + 1) % queue.length;
+         queue[rear] = theElement;
+
       } catch (Exception e) {
          Helpers.printLine(e.getMessage());
       }
@@ -84,12 +76,9 @@ public class MyArrayQueue
          if (isEmpty()) {
             throw new Exception("You cannot dequeue. The queue is empty.");
          }
-   
-         if (front == queue.length - 1) {
-            front = 0;
-         } else {
-            front += 1;
-         }
+
+         front = (front + 1) % queue.length;
+
       } catch (Exception e) {
          Helpers.printLine(e.getMessage());
       }
