@@ -43,13 +43,14 @@ public class Helpers {
             } else {
                 String s;
                 while ((s = in.readLine()) != null) {
-                    // Removing all punctuation as it isn't relevant to the meaning of the word (except ' and - )
-                    String[] splitLine = s.replaceAll("[^a-zA-Z '-]", "").toLowerCase().split(" ");
+                    // String[] splitLine = s.replaceAll("[^a-zA-Z '-]", "").toLowerCase().split(" ");
+
+                    // Split line by space and ' (so words like "don't" become "don t" which are stopwords)
+                    String[] splitLine = s.toLowerCase().split("[ ']");
                     Collections.addAll(stringList, splitLine);    
                 }
-                // Remove any stray spaces or - that are not attatched to any characters
+                // Remove any stray empty strings
                 stringList.removeAll(Collections.singleton(""));
-                stringList.removeAll(Collections.singleton("-"));
             }
            
 

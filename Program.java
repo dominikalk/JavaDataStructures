@@ -11,9 +11,22 @@ public class Program {
     public static ArrayList<String> deleteStopwords(ArrayList<String> input, ArrayList<String> stopwords) {
         // Remove all function : https://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html
         for (String stopword: stopwords) {
-            input.removeAll(Collections.singleton(stopword));
-        }
+            for (int i = 0; i < input.size(); i++) {
+                // Get raw string without punctuation
+                String formattedInput = input.get(i).replaceAll("[^a-zA-Z]", "");
 
+                // Check if raw string is equal to stopword
+                if (formattedInput.equals(stopword)) {
+                    // Replace with empty string and add string with stopword removed
+                    input.add(input.get(i).replaceAll(stopword, ""));
+                    input.set(i, "");
+                }
+            }
+        }
+        // Remove all empty strings
+        input.removeAll(Collections.singleton(""));
+        input.removeAll(Collections.singleton("\t"));
+        
         return input;
     }
 
@@ -24,8 +37,8 @@ public class Program {
      */
     public static ArrayList<String> insertionSort(ArrayList<String> listofWords) {
         // Insertion Sort Algorithm : https://learningcentral.cf.ac.uk/ultra/courses/_406132_1/cl/outline
+        
         // Loop throught the listofWords, starting with the second element
-
         int swaps = 0;
         int checks = 0;
         for (int i = 1; i < listofWords.size(); i++){
