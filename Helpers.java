@@ -43,10 +43,13 @@ public class Helpers {
             } else {
                 String s;
                 while ((s = in.readLine()) != null) {
-                    String[] splitLine = s.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
+                    // Removing all punctuation as it isn't relevant to the meaning of the word (except ' and - )
+                    String[] splitLine = s.replaceAll("[^a-zA-Z '-]", "").toLowerCase().split(" ");
                     Collections.addAll(stringList, splitLine);    
                 }
+                // Remove any stray spaces or - that are not attatched to any characters
                 stringList.removeAll(Collections.singleton(""));
+                stringList.removeAll(Collections.singleton("-"));
             }
            
 

@@ -9,7 +9,7 @@ public class Program {
      * @return the words given as a parameter with the stopwords removed
      */
     public static ArrayList<String> deleteStopwords(ArrayList<String> input, ArrayList<String> stopwords) {
-        // Remove all function : https://howtodoinjava.com/java/collections/arraylist/arraylist-remove-example/
+        // Remove all function : https://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html
         for (String stopword: stopwords) {
             input.removeAll(Collections.singleton(stopword));
         }

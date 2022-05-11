@@ -50,7 +50,10 @@ public class MyArrayQueue
          return queue[rear];
    }
 
-   /** insert theElement at the rear of the queue */
+   /**
+    * insert theElement at the rear of the queue
+    * @param theElement
+    */
    public void enqueue(Object theElement)
    {
 	   try {
@@ -66,8 +69,10 @@ public class MyArrayQueue
       }
    }
 
-   /** remove an element from the front of the queue
-     * @return removed element */
+   /** 
+    * remove an element from the front of the queue
+    * @return removed element 
+    */
    public Object dequeue()
    {
       Object frontElement = getFrontElement();
