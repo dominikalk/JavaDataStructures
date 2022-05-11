@@ -143,9 +143,16 @@ public class Program {
     }
 
     public static void main(String[] args){
+        Helpers.printLine("What directory are stopwords.txt and input.txt in? (Press enter if it's in the same one): ");
+        String directory = Helpers.readLine();
+        // Remove trailing / if exists
+        if (directory.length() > 0 && directory.substring(directory.length() - 1, directory.length()).equals("/")) {
+            directory = directory.substring(0, directory.length() - 1);
+        }
         // Read Files
-        ArrayList<String> stopwords = Helpers.readFile("stopwords.txt", true);
-        ArrayList<String> input = Helpers.readFile("input.txt", false);
+        // Even if the user starts the directory string with ./ or ../, adding a ./ before still works
+        ArrayList<String> stopwords = Helpers.readFile("./" + directory + "/stopwords.txt", true);
+        ArrayList<String> input = Helpers.readFile("./" + directory + "/input.txt", false);
         // Remove Stopwords
         Helpers.printLine("\nInput with stopwords removed:\n");
         ArrayList<String> filteredInput = deleteStopwords(input, stopwords);

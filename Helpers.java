@@ -1,8 +1,11 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Helpers {
+    static Scanner in = new Scanner(System.in);
+
     /**
      * Used to print a line to save time coding and clean up code
      * @param message
@@ -19,6 +22,14 @@ public class Helpers {
         printLine(message);
         printLine("");
         System.exit(400);
+    }
+
+    /**
+     * Returns the line written by user in terminal
+     * @return The string that was written by the user
+     */
+    public static String readLine(){
+        return in.nextLine();
     }
 
     /**
@@ -55,7 +66,7 @@ public class Helpers {
            
 
         } catch (FileNotFoundException e) {
-            exitProgram("\nThat file does not exist.");
+            exitProgram("\n" + fileName + " does not exist.");
 
         } catch (Exception e){
             printLine(e.getMessage());
