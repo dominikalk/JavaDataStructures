@@ -36,7 +36,7 @@ public class Program {
      * @return listofWords sorted alphabetically
      */
     public static ArrayList<String> insertionSort(ArrayList<String> listofWords) {
-        // Insertion Sort Algorithm : https://learningcentral.cf.ac.uk/ultra/courses/_406132_1/cl/outline
+        // Insertion Sort Algorithm : Learning Central - Merge Sort Powerpoint
         
         // Loop throught the listofWords, starting with the second element
         int swaps = 0;
@@ -151,7 +151,7 @@ public class Program {
      * @return ArrayList of the sublist provided that's in alphabetical order
      */
     public static ArrayList<String> mergeSort(ArrayList<String> listofWords, int p, int r) {
-        // Merge Sort Algorithm : https://learningcentral.cf.ac.uk/ultra/courses/_406132_1/cl/outline
+        // Merge Sort Algorithm : Learning Central - Bubble Sort and Insertion Sort Powerpoint
         ArrayList<String> mergedList = new ArrayList<String>();
         if (p < r) {
             // Find the midpoint of the list

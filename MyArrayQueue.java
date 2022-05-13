@@ -85,19 +85,14 @@ public class MyArrayQueue
    public Object dequeue()
    {
       Object frontElement = getFrontElement();
-
-      try {
-         // Error handling for if the queue is empty
-         if (isEmpty()) {
-            throw new Exception("You cannot dequeue. The queue is empty.");
-         }
-
-         // Increment the front pointer (no need to remove the value from index as it is no longer accessible)
-         front = (front + 1) % queue.length;
-
-      } catch (Exception e) {
-         Helpers.printLine(e.getMessage());
+      // Error handling for if the queue is empty
+      if (isEmpty()) {
+         return null;
       }
+      // Increment the front pointer and remove front element
+      front = (front + 1) % queue.length;
+      queue[front] = null;
+
 
       return frontElement;
    }

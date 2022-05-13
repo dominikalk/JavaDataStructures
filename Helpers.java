@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Helpers {
+    // Scanner : https://cardiff.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=c0b366a5-e664-4228-ad1e-ae32006171e5&instance=CLAWSBlackboard
     static Scanner in = new Scanner(System.in);
 
     /**
@@ -39,6 +40,7 @@ public class Helpers {
      * @return ArrayList<String> of the words in the file
      */
     public static ArrayList<String> readFile(String fileName, boolean isStopwords) {
+        // Reading Files : https://cardiff.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=86d25a70-2c64-4a30-8fa6-ae3200617166&instance=CLAWSBlackboard
         ArrayList<String> stringList = new ArrayList<String>();
 
         try {
