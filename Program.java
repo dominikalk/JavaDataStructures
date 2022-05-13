@@ -66,6 +66,26 @@ public class Program {
     }
 
     /**
+     * Function to check if listSize is intended one and print the sorted time
+     * @param listSize size of the list
+     */
+    public static void checkMergeTime(int listSize) {
+        // Checks if listSize is 500 || 200 || 100 and the time hasn't been printed
+        if (listSize == 500 && !AlgorithmTimer.checks.get("500")) {
+            // Set time printed to true
+            AlgorithmTimer.checks.put("500", true);
+            // Print the time
+            AlgorithmTimer.printTime("Merge Sort first 500 sorted");
+        } else if (listSize == 200 && !AlgorithmTimer.checks.get("200")) {
+            AlgorithmTimer.checks.put("200", true);
+            AlgorithmTimer.printTime("Merge Sort first 200 sorted");
+        } else if (listSize == 100 && !AlgorithmTimer.checks.get("100")) {
+            AlgorithmTimer.checks.put("100", true);
+            AlgorithmTimer.printTime("Merge Sort first 100 sorted");
+        }
+    }
+
+    /**
      * Takes two sublists and merges them whilst keeping the order alphabetical
      * @param s1 Sublist one
      * @param s2 Sublist two
@@ -78,26 +98,44 @@ public class Program {
         int i = 0;
         int s1Length = s1.size();
         while (s1.size() != 0 && s2.size() != 0){
+            // If s1 first element is less, add to mergedList and remove from s1
             if (s1.get(0).compareTo(s2.get(0)) <= 0) {
                 mergedList.add(s1.get(0));
                 s1.remove(0);
                 AlgorithmTimer.mergeInverstions += j;
                 i += 1;
-            } else {
+            } 
+            // If s2 first element is less, add to mergedList and remove from s2
+            else {
                 mergedList.add(s2.get(0));
                 s2.remove(0);
                 j += 1;
+            }
+
+            // Algorithm timer (mod function to reduce function calls)
+            if (mergedList.size() % 100 == 0) {
+                checkMergeTime(mergedList.size());
             }
         }
         // Move remaining elements in s1 to mergedList
         while (s1.size() != 0) {
             mergedList.add(s1.get(0));
             s1.remove(0);
+
+            // Algorithm timer (mod function to reduce function calls)
+            if (mergedList.size() % 100 == 0) {
+                checkMergeTime(mergedList.size());
+            }
         }
         // Move remaining elements in s2 to mergedList
         while (s2.size() != 0) {
             mergedList.add(s2.get(0));
             s2.remove(0);
+
+            // Algorithm timer (mod function to reduce function calls)
+            if (mergedList.size() % 100 == 0) {
+                checkMergeTime(mergedList.size());
+            }
         }
 
         AlgorithmTimer.mergeInverstions += j * (s1Length - i);
@@ -128,21 +166,11 @@ public class Program {
             mergedList.add(listofWords.get(p));
         }
 
-        // Algorithm Timing Code
-        if (mergedList.size() >= 500 && !AlgorithmTimer.checks.get("500")) {
-            AlgorithmTimer.checks.put("500", true);
-            AlgorithmTimer.printTime("Merge Sort first 500 (really " + mergedList.size() + ") sorted");
-        } else if (mergedList.size() >= 200 && !AlgorithmTimer.checks.get("200")) {
-            AlgorithmTimer.checks.put("200", true);
-            AlgorithmTimer.printTime("Merge Sort first 200 (really " + mergedList.size() + ") sorted");
-        } else if (mergedList.size() >= 100 && !AlgorithmTimer.checks.get("100")) {
-            AlgorithmTimer.checks.put("100", true);
-            AlgorithmTimer.printTime("Merge Sort first 100 (really " + mergedList.size() + ") sorted");
-        }
         return mergedList;
     }
 
     public static void main(String[] args){
+        // Get user directory input
         Helpers.printLine("What directory are stopwords.txt and input.txt in? (Press enter if it's in the same one): ");
         String directory = Helpers.readLine();
         // Remove trailing / if exists

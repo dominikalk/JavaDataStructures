@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Collections;
+
 /** a queue class that uses a one-dimensional array */
 
 public class MyArrayQueue 
@@ -56,17 +59,23 @@ public class MyArrayQueue
     */
    public void enqueue(Object theElement)
    {
-	   try {
-         if ((rear + 1) % queue.length == front) {
-            throw new Exception("You cannot enqueue. Queue has the maximum number of elements.");
-         }
-
-         rear = (rear + 1) % queue.length;
-         queue[rear] = theElement;
-
-      } catch (Exception e) {
-         Helpers.printLine(e.getMessage());
+      // If queue is full
+      if ((rear + 1) % queue.length == front) {
+         // Create new array of double size and copy contents
+         Object[] newQueue = new Object [(queue.length * 2) - 1];
+         // Rotate array and set pointers so null elements dont get added to middle of queue
+         // Rotate : https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collections.html#rotate(java.util.List,int)
+         Collections.rotate(Arrays.asList(queue), -front);
+         front = 0;
+         rear = queue.length - 1;
+         // ArrayCopy : https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/System.html#arraycopy(java.lang.Object,int,java.lang.Object,int,int)
+         System.arraycopy(queue, 0, newQueue, 0, queue.length);
+         queue = newQueue;
       }
+
+      // Increment rear pointer and add element
+      rear = (rear + 1) % queue.length;
+      queue[rear] = theElement;
    }
 
    /** 
@@ -78,10 +87,12 @@ public class MyArrayQueue
       Object frontElement = getFrontElement();
 
       try {
+         // Error handling for if the queue is empty
          if (isEmpty()) {
             throw new Exception("You cannot dequeue. The queue is empty.");
          }
 
+         // Increment the front pointer (no need to remove the value from index as it is no longer accessible)
          front = (front + 1) % queue.length;
 
       } catch (Exception e) {

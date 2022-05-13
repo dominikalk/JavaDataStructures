@@ -3,6 +3,7 @@ import java.util.Map;
 
 public class AlgorithmTimer {
     public static long startTime;
+    // Map : https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html
     public static Map<String, Boolean> checks = new HashMap<>();
     public static int mergeInverstions = 0;
 
@@ -11,6 +12,7 @@ public class AlgorithmTimer {
      * @return start time
      */
     public static long resetStartTime() {
+        // Nanotime : https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/System.html#nanoTime()
         startTime = System.nanoTime();
         return startTime;
     }

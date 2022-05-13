@@ -45,6 +45,7 @@ public class Helpers {
             FileReader reader = new FileReader(fileName);
             BufferedReader in = new BufferedReader(reader);
 
+            // Reading the file is slightly different depending on if it's a stopword or input
             if (isStopwords) {
                 String s;
                 while ((s = in.readLine()) != null) {
@@ -54,8 +55,6 @@ public class Helpers {
             } else {
                 String s;
                 while ((s = in.readLine()) != null) {
-                    // String[] splitLine = s.replaceAll("[^a-zA-Z '-]", "").toLowerCase().split(" ");
-
                     // Split line by space and ' (so words like "don't" become "don t" which are stopwords)
                     String[] splitLine = s.toLowerCase().split("[ ']");
                     Collections.addAll(stringList, splitLine);    
@@ -64,7 +63,7 @@ public class Helpers {
                 stringList.removeAll(Collections.singleton(""));
             }
            
-
+        // Error handling code
         } catch (FileNotFoundException e) {
             exitProgram("\n" + fileName + " does not exist.");
 
